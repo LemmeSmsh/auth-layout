@@ -27,16 +27,20 @@ const styles = css`
   cursor: ${ifProp('disabled', 'default', 'pointer')};
   appearance: none;
   padding: 0 1em;
-  border-radius: 0.125em;
+  border-radius: 4px;
   box-sizing: border-box;
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
   transition: background-color 250ms ease-out, color 250ms ease-out, border-color 250ms ease-out;
-  background-color: ${backgroundColor};
-  color: ${foregroundColor};
+  background-color: black;
+  color: white;
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 5px;
+  margin-bottom: 15px;
 
   &:hover, &:focus, &:active {
-    background-color: ${hoverBackgroundColor};
-    color: ${hoverForegroundColor};
+    background-color: #333;
   }
 
   &:focus {

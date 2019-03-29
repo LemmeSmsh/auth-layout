@@ -3,12 +3,69 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux';
 import { font, palette } from 'styled-theme'
-import { Field, Button } from 'components'
+import { Input, Button, InputSmall } from 'components'
+
+const Body = styled.div`
+  background: black;
+  margin: 0;
+`
+
+const PlaceholderOption = styled.option`
+  display: none;
+  color: grey;
+`
+
+const HR = styled.hr`
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: black;
+`
 
 const Wrapper = styled.div`
   font-family: ${font('primary')};
   color: ${palette('grayscale', 0)};
+  width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 6px;
+  padding: 10px 60px 10px 60px;
+  margin-top: 10%;
+  background: white;
 `
+
+const InputWrapper = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+`
+
+const Headling = styled.h3`
+  font-family: ${font('primary')};
+  color: ${palette('grayscale', 0)};
+  text-align: center;
+  margin-bottom: 7%;
+  letter-spacing: 0.05rem;
+`
+
+const Option = styled.option`
+  color: black;
+`
+const Link = styled.a`
+  color: cadetblue;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+const Paragraph = styled.p`
+  text-align: center;
+`
+
 
 const AuthForm = ({ onCheckAuth }) => {
   let loginInput = "";
@@ -40,20 +97,48 @@ const AuthForm = ({ onCheckAuth }) => {
   };
 
   return (
+    <Body>
     <Wrapper>
-      <Field 
+    <Headling>РЕГИСТРАЦИЯ</Headling>
+      <Input 
         name="authLogin"
-        label="Login:"
+        placeholder="Фамилия"
         onChange={ rewriteInnerLogin }
       />
-      <Field 
+      <Input 
         name="authPassword"
-        label="Password:"
-        type="password"
+        placeholder="Имя"
         onChange={ rewriteInnerPassword }
       />
-      <Button onClick={ checkAuth }>Login</Button>
+      <InputWrapper>
+        <InputSmall 
+          name="dayOfBirth"
+          placeholder="Дата рождения"
+          />
+        <InputSmall
+          name="sex"
+          type="select"
+          defaultValue="Пол"
+          >
+            <PlaceholderOption>Пол</PlaceholderOption>
+            <Option>Мужской</Option>
+            <Option>Женский</Option>
+          </InputSmall>
+        </InputWrapper>
+        <Input
+          name="phone"
+          placeholder="Телефон"
+        />
+        <Input
+          name="email"
+          placeholder="E-mail"
+        />
+
+      <Button onClick={ checkAuth }>Регистрация</Button>
+      <HR/>
+      <Paragraph>Уже есть аккаунт? <Link href="#">Войти</Link></Paragraph>
     </Wrapper>
+    </Body>
   )
 }
 

@@ -7,9 +7,9 @@ import App from 'components/App'
 
 
 const renderApp = () => (
-  <BrowserRouter basename={'/'}>
-    <App />
-  </BrowserRouter>
+	<BrowserRouter>
+      <App />
+    </BrowserRouter>
 )
 
 const root = document.getElementById('app')

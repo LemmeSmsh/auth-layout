@@ -1,21 +1,13 @@
-// https://github.com/diegohaz/arc/wiki/Atomic-Design
-// https://github.com/diegohaz/arc/wiki/Atomic-Design
 import React from 'react'
-import { HomeAndAuthTemplate } from 'components'
-import { Header } from 'components' 
 import { AuthForm } from 'components'
 
 import { connect } from 'react-redux'
 
 const AuthPage = ({ onCheckAuth }) => {
   return (
-      <HomeAndAuthTemplate
-        header={ <Header /> }     
-      >
       <AuthForm 
         onCheckAuth={ onCheckAuth }
       />
-      </HomeAndAuthTemplate>
   )
 }
 

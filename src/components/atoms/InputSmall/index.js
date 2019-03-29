@@ -8,8 +8,9 @@ const fontSize = ({ height }) => `${height / 40.5555555556}rem`
 
 const styles = css`
   font-family: ${font('primary')};
-  display: block;
-  width: 70%;
+  display: inline-block;
+  width: 48%;
+  float: left;
   margin-top: 0;
   margin-bottom: 20px;
   margin-left: auto;
@@ -31,6 +32,11 @@ const styles = css`
     height: auto;
     margin: 0 0.2rem 0 0;
   }
+
+  &[type=select] {
+    float: right;
+  }
+
 `
 
 const StyledTextarea = styled.textarea`${styles}`
