@@ -2,13 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux';
+import _ from 'lodash'
 import { font, palette } from 'styled-theme'
-import { Input, Button, InputSmall } from 'components'
-
-const Body = styled.div`
-  background: black;
-  margin: 0;
-`
+import { Input, Button, InputSmall, CloseIcon } from 'components'
 
 const PlaceholderOption = styled.option`
   display: none;
@@ -28,11 +24,12 @@ const Wrapper = styled.div`
   font-family: ${font('primary')};
   color: ${palette('grayscale', 0)};
   width: 480px;
+  float: left;
   margin-left: auto;
   margin-right: auto;
   border-radius: 6px;
-  padding: 10px 60px 10px 60px;
-  margin-top: 10%;
+  margin-top: -150px;
+  padding: 40px 60px 10px 60px;
   background: white;
 `
 
@@ -67,60 +64,101 @@ const Paragraph = styled.p`
 `
 
 
-const AuthForm = ({ onCheckAuth }) => {
-  let loginInput = "";
-  let passwordInput = "";
-  const newPath = '/departments'; // New path for redirection
+const AuthForm = ({ onAddUser, onWrongField }) => {
+  
+  let data = {
+    lastName:  "",
+    firstName: "",
+    dayOfBirth:  "",
+    sex:  "Мужской",
+    phone:  "",
+    email:  "",
+  }
+  let emptyField = false;
 
-  const reg = /[<>\'\".{}\[\]]/; // RegExp for checking inputs values
+  const newPath = '/profile'; // New path for redirection
 
-  // Updating inner login's value
-  const rewriteInnerLogin = event => {
-    loginInput = event.target.value;
-    console.log(loginInput)
-  };
+  const reg = /[<>\'\"{}\[\]]/; // RegExp for checking inputs values
 
-  //Updating inner password's value
-  const rewriteInnerPassword = event => {
-    passwordInput = event.target.value;
-    console.log(passwordInput)
-  };
+  const warning = element => {
+    if (element.value == "") element.style.border = "1px solid red";
+    else element.style.border = "1px solid #CCC";
+  }
 
-  // Check 'bad symbols' in auth, then comparing to correct login and password 
-  const checkAuth = () => { 
-      if ( (loginInput.search(reg) == -1 && loginInput.search(reg)) == -1) {
-  	    onCheckAuth(loginInput, passwordInput);
-        if (sessionStorage.getItem('correctLogin')) {
-          window.location.href = newPath;
+  // Inserting values in inner various 
+  const onBlurLastName = event => {
+    data.lastName = event.target.value;
+    warning(event.currentTarget);
+  }
+  const onBlurFirstName = event => {
+    data.firstName = event.target.value;
+    warning(event.currentTarget); 
+  }
+  const onBlurDayOfBirth = event => {
+    data.dayOfBirth = event.target.value;
+    warning(event.currentTarget);
+  }
+  const onBlurSex = event => {
+    data.sex = event.target.value;
+    warning(event.currentTarget);
+  }
+  const onBlurPhone = event => {
+    data.phone = event.target.value;
+    warning(event.currentTarget);
+  }
+  const onBlurEmail = event => {
+    data.email = event.target.value;
+    warning(event.currentTarget);
+  }
+
+  const auth = () => {
+    emptyField = false;
+    _.map(data, (item, key) => {
+      if (item == "" | item.search(reg) != -1) {
+        emptyField = true;
+        document.getElementById(key).style.border = '1px solid red';
+        console.log(key);
+      }
+    });
+    if (emptyField == false) {
+        onAddUser(data.lastName, data.firstName, data.dayOfBirth, data.sex, data.phone, data.email);
+        window.location.href = newPath;
+    } else { 
+        onWrongField; 
       };
-    } else console.log('Hey, hey, calm down, little buster...');
   };
 
   return (
-    <Body>
     <Wrapper>
+    <CloseIcon icon="close" />
     <Headling>РЕГИСТРАЦИЯ</Headling>
       <Input 
-        name="authLogin"
+        name="lastName"
         placeholder="Фамилия"
-        onChange={ rewriteInnerLogin }
+        onBlur={onBlurLastName}
+        id="lastName"
       />
       <Input 
-        name="authPassword"
+        name="firstName"
         placeholder="Имя"
-        onChange={ rewriteInnerPassword }
+        onBlur={onBlurFirstName}
+        id="firstName"
       />
       <InputWrapper>
         <InputSmall 
           name="dayOfBirth"
           placeholder="Дата рождения"
+          onBlur={onBlurDayOfBirth}
+          id="dayOfBirth"
           />
         <InputSmall
           name="sex"
           type="select"
-          defaultValue="Пол"
+          defaultValue="Мужской"
+          onBlur={onBlurSex}
+          id="sex"
           >
-            <PlaceholderOption>Пол</PlaceholderOption>
+            <PlaceholderOption selected disabled>Пол</PlaceholderOption>
             <Option>Мужской</Option>
             <Option>Женский</Option>
           </InputSmall>
@@ -128,17 +166,21 @@ const AuthForm = ({ onCheckAuth }) => {
         <Input
           name="phone"
           placeholder="Телефон"
+          onBlur={onBlurPhone}
+          id="phone"
         />
         <Input
           name="email"
           placeholder="E-mail"
+          onBlur={onBlurEmail}
+          id="email"
         />
 
-      <Button onClick={ checkAuth }>Регистрация</Button>
+      <Button onClick={ auth }>Регистрация</Button>
+      {emptyField && <p>Заполните все поля для регистрации</p>}
       <HR/>
       <Paragraph>Уже есть аккаунт? <Link href="#">Войти</Link></Paragraph>
     </Wrapper>
-    </Body>
   )
 }
 

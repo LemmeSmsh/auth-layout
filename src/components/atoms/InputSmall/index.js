@@ -21,7 +21,7 @@ const styles = css`
   height: 45px;
   color: ${palette('grayscale', 0)};
   background-color: ${palette('grayscale', 0, true)};
-  border: 1px solid #666};
+  border: 1px solid #CCC};
   border-radius: 4px;
 
   &[type=checkbox], &[type=radio] {

@@ -5,40 +5,47 @@ import styled from 'styled-components'
 import { size } from 'styled-theme'
 
 const Wrapper = styled.div`
-  display: flex;
+  display: block;
   flex-direction: column;
   padding-top: 3.75rem;
   height: 100%;
   box-sizing: border-box;
+  margin: 0;
   @media screen and (max-width: 640px) {
     padding-top: 3.25rem;
   }
 `
 
 const Header = styled.header`
-  position: fixed;
+  position: relative;
+  float: left;
   top: 0;
   width: 100%;
-  z-index: 999;
+  z-index: -999;
 `
 
-//const Hero = styled.section``
-
-//const Sponsor = styled.section``
+const Nav = styled.nav`
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+  heigth: 50px;
+`
 
 const Content = styled.section`
   width: 100%;
   box-sizing: border-box;
-  margin: 2rem auto;
+  margin: 0 auto 0 auto;
   max-width: ${size('maxWidth')};
 `
 
 const HomeAndAuthTemplate = ({
-  header, children, ...props
+  nav, header, children, ...props
 }) => {
   return (
     <Wrapper {...props}>
       <Header>{header}</Header>
+      <Nav>{ nav }</Nav>
       <Content>{children}</Content>
     </Wrapper>
   )
@@ -46,8 +53,6 @@ const HomeAndAuthTemplate = ({
 
 HomeAndAuthTemplate.propTypes = {
   header: PropTypes.node.isRequired,
-  //hero: PropTypes.node,
-  //sponsor: PropTypes.node,
 }
 
 export default HomeAndAuthTemplate

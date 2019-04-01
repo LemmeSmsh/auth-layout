@@ -9,15 +9,15 @@ const fontSize = ({ height }) => `${height / 40.5555555556}rem`
 const styles = css`
   font-family: ${font('primary')};
   display: block;
-  width: 70%;
+  width: 100%;
   margin-top: 0;
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
   font-size: ${fontSize};
-  padding: 0 1em;
-  height: 45px;
+  padding: 0 0.6em;
+  height: 35px;
   color: ${palette('grayscale', 0)};
   background-color: ${palette('grayscale', 0, true)};
   border: 1px solid #CCC};
@@ -30,6 +30,11 @@ const styles = css`
     width: auto;
     height: auto;
     margin: 0 0.2rem 0 0;
+  }
+  
+  &[type=textarea] {
+    height: 100px;
+    padding-top: 10px;
   }
 `
 

@@ -6,9 +6,14 @@ import { IconLink, Block } from 'components'
 
 const Wrapper = styled(Block)`
   display: block;
+  float: center;
   justify-content: center;
   padding: 0.5rem;
-  margin-bottom: 5%;
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 50%) 100%);
+  backdrop-filter: blur(135.914px);
+  height: 50vh;
+  border-bottom: 2px solid #DDD;
+  margin-bottom: 0%;
   @media screen and (max-width: 640px) {
     padding: 0.5rem;
   }
@@ -39,7 +44,6 @@ const Header = (props) => {
   return (
     <Wrapper opaque reverse {...props}>
       <InnerWrapper>
-        <Title>React Data Base</Title>
       </InnerWrapper>
     </Wrapper>
   )
