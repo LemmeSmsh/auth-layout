@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { size } from 'styled-theme'
 
-import { Block, LogoImage, Icon, Link } from 'components'
+import { Block, LogoImage, Icon, Navbar } from 'components'
 
 const Wrapper = styled(Block)`
   display: block;
@@ -28,29 +28,18 @@ const InnerWrapper = styled.div`
   }
 `
 
-const NavItem = styled.div`
-  display: inline;
-  margin-right: 40px;
-  font-size: 16px;
-  user-select: none;
-`
-
-const Navbar = styled.div`
-  margin-left: 10%;
-  width: 100%;
-`
-
 const Nav = (props) => {
+
   return (
     <Wrapper opaque reverse {...props}>
       <InnerWrapper>
-        <Navbar>
-          <Link href="/"><LogoImage /></Link>
-          <NavItem><Icon icon="find" /></NavItem>
-          <NavItem>О ПРОЕКТЕ</NavItem>
-          <NavItem>КОНТАКТЫ</NavItem>
-          <NavItem>МЕДИА</NavItem>
-        </Navbar>
+        <Navbar
+          logout={props.logout} 
+          regWindowIsOpened={props.regWindowIsOpened}
+          authWindowIsOpened={props.authWindowIsOpened}
+          openAuthWindow={props.openAuthWindow}
+          openRegWindow={props.openRegWindow}
+        />
       </InnerWrapper>
     </Wrapper>
   )

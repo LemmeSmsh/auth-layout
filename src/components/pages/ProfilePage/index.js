@@ -24,24 +24,35 @@ const ProfileWindow = styled.div`
   background: white;
 `
 
-const ProfilePage = () => {
+class ProfilePage extends React.Component {
 
-	let percentage = 60;
+	constructor(props) {
+		super(props);
 
-    return (
-      <HomeAndAuthTemplate
-        nav={ <Nav /> }
-        header={ <Header /> }
-      >
-      <ProfileStat percentage={percentage}/>
-      <Wrapper>
-        <ProfileWindow>
-          <ProfileMenu />
-          <ProfileMain />
-        </ProfileWindow>
-      </Wrapper>
-      </HomeAndAuthTemplate>
-    )
+    this.logout = this.logout.bind(this);
+	}
+
+  logout() {
+    localStorage.removeItem('login');
+    window.location.href = '/';
+  }
+
+    render() {
+      return (
+        <HomeAndAuthTemplate
+          nav={ <Nav logout={this.logout}/> }
+          header={ <Header /> }
+        >
+        <ProfileStat percentage={60}/>
+        <Wrapper>
+          <ProfileWindow>
+            <ProfileMenu />
+            <ProfileMain />
+          </ProfileWindow>
+        </Wrapper>
+        </HomeAndAuthTemplate>
+      )
+    }
 }
 
 const mapStateToProps = store => ({

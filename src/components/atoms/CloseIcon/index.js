@@ -18,6 +18,7 @@ const Wrapper = styled.span`
   font-size: ${fontSize};
   color: ${ifProp('palette', palette({ grayscale: 0 }, 1), 'currentcolor')};
   width: 1em;
+  cursor: pointer;
   height: 1em;
   margin: 0.1em;
   box-sizing: border-box;

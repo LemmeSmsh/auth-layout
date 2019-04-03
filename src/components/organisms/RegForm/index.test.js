@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import PrimaryNavigation from '.'
+import AuthForm from '.'
 
-const wrap = (props = {}) => shallow(<PrimaryNavigation {...props} />)
+const wrap = (props = {}) => shallow(<AuthForm {...props} />)
 
 it('renders props when passed in', () => {
   const wrapper = wrap({ id: 'foo' })

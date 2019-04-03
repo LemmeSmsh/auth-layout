@@ -21,14 +21,24 @@ const HR = styled.hr`
 `
 
 const Wrapper = styled.div`
+  width: 100vw;
+  display: flex;
+  margin: 0;
+  float: left;
+  background: rgba(0,0,0,30%);
+  position: absolute;
+  padding-top: 25vh;
+  top: 0;
+  left: 0;
+`
+
+const InnerWrapper = styled.div`
   font-family: ${font('primary')};
   color: ${palette('grayscale', 0)};
   width: 480px;
-  float: left;
   margin-left: auto;
   margin-right: auto;
   border-radius: 6px;
-  margin-top: -150px;
   padding: 40px 60px 10px 60px;
   background: white;
 `
@@ -64,128 +74,41 @@ const Paragraph = styled.p`
 `
 
 
-const AuthForm = ({ onAddUser, onWrongField }) => {
+const AuthForm = ({ onAddUser, closeRegWindow, login }) => {
   
-  let data = {
-    lastName:  "",
-    firstName: "",
-    dayOfBirth:  "",
-    sex:  "Мужской",
-    phone:  "",
-    email:  "",
-  }
-  let emptyField = false;
+  let name = "";
 
   const newPath = '/profile'; // New path for redirection
 
-  const reg = /[<>\'\"{}\[\]]/; // RegExp for checking inputs values
-
-  const warning = element => {
-    if (element.value == "") element.style.border = "1px solid red";
-    else element.style.border = "1px solid #CCC";
-  }
-
-  // Inserting values in inner various 
-  const onBlurLastName = event => {
-    data.lastName = event.target.value;
-    warning(event.currentTarget);
-  }
-  const onBlurFirstName = event => {
-    data.firstName = event.target.value;
-    warning(event.currentTarget); 
-  }
-  const onBlurDayOfBirth = event => {
-    data.dayOfBirth = event.target.value;
-    warning(event.currentTarget);
-  }
-  const onBlurSex = event => {
-    data.sex = event.target.value;
-    warning(event.currentTarget);
-  }
-  const onBlurPhone = event => {
-    data.phone = event.target.value;
-    warning(event.currentTarget);
-  }
-  const onBlurEmail = event => {
-    data.email = event.target.value;
-    warning(event.currentTarget);
-  }
+  const regName = /[^а-яА-Я]/; //RegExp for names
 
   const auth = () => {
-    emptyField = false;
-    _.map(data, (item, key) => {
-      if (item == "" | item.search(reg) != -1) {
-        emptyField = true;
-        document.getElementById(key).style.border = '1px solid red';
-        console.log(key);
-      }
-    });
-    if (emptyField == false) {
-        onAddUser(data.lastName, data.firstName, data.dayOfBirth, data.sex, data.phone, data.email);
-        window.location.href = newPath;
-    } else { 
-        onWrongField; 
-      };
+    if (name != "") {
+      localStorage.setItem('login', name);
+      window.location.href = newPath;
+    }
   };
+
+  const changeInnerName = (event) => {
+    name = event.target.value;
+  }
 
   return (
     <Wrapper>
-    <CloseIcon icon="close" />
-    <Headling>РЕГИСТРАЦИЯ</Headling>
-      <Input 
-        name="lastName"
-        placeholder="Фамилия"
-        onBlur={onBlurLastName}
-        id="lastName"
-      />
-      <Input 
-        name="firstName"
-        placeholder="Имя"
-        onBlur={onBlurFirstName}
-        id="firstName"
-      />
-      <InputWrapper>
-        <InputSmall 
-          name="dayOfBirth"
-          placeholder="Дата рождения"
-          onBlur={onBlurDayOfBirth}
-          id="dayOfBirth"
-          />
-        <InputSmall
-          name="sex"
-          type="select"
-          defaultValue="Мужской"
-          onBlur={onBlurSex}
-          id="sex"
-          >
-            <PlaceholderOption selected disabled>Пол</PlaceholderOption>
-            <Option>Мужской</Option>
-            <Option>Женский</Option>
-          </InputSmall>
-        </InputWrapper>
-        <Input
-          name="phone"
-          placeholder="Телефон"
-          onBlur={onBlurPhone}
-          id="phone"
+      <InnerWrapper>
+      <CloseIcon icon="close" onClick={closeRegWindow}/>
+        <Input 
+          name="firstName"
+          onChange={changeInnerName}
+          id="firstName"
+          label="Введите имя"
         />
-        <Input
-          name="email"
-          placeholder="E-mail"
-          onBlur={onBlurEmail}
-          id="email"
-        />
-
-      <Button onClick={ auth }>Регистрация</Button>
-      {emptyField && <p>Заполните все поля для регистрации</p>}
+      <Button onClick={ auth }>Вход</Button>
       <HR/>
-      <Paragraph>Уже есть аккаунт? <Link href="#">Войти</Link></Paragraph>
+      <Paragraph>Забыли пароль? <Link href="#">Восстановить</Link></Paragraph>
+      </InnerWrapper>
     </Wrapper>
   )
-}
-
-AuthForm.propTypes = {
-  reverse: PropTypes.bool,
 }
 
 export default AuthForm;

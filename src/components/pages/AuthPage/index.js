@@ -1,32 +1,89 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-import { AuthForm, HomeAndAuthTemplate, Nav, Header } from 'components'
+import { AuthForm, HomeAndAuthTemplate, Nav, Header, RegForm } from 'components'
 
 import { connect } from 'react-redux'
 
 
-const Wrapper = styled.div`
+const RegWindow = styled.div`
   width: 100%;
   display: flex;
   float: left;
+  background: rgba(0,0,0,30%);
+  position: absolute;
+  top: 0;
 `
 
 
-const AuthPage = ({ onAddUser, onWrongField }) => {
+class AuthPage extends React.Component {
+  
+    constructor(props) {
+  super(props);
 
-  return (
-    <HomeAndAuthTemplate
-      nav={ <Nav /> }
-      header={ <Header /> }
-    >
-    <Wrapper>
-      <AuthForm 
-        onAddUser={ onAddUser }
-        onWrongField={ onWrongField }
-      />
-    </Wrapper>
-    </HomeAndAuthTemplate>
-  )
+  this.openRegWindow = this.openRegWindow.bind(this);
+  this.closeRegWindow = this.closeRegWindow.bind(this);
+  this.openAuthWindow = this.openAuthWindow.bind(this);
+  this.closeAuthWindow = this.openAuthWindow.bind(this);
+  this.login = this.login.bind(this);
+  this.logout = this.logout.bind(this);
+
+  this.state = {
+        regWindowIsOpened: false,
+        authWindowIsOpened: false,
+        logged: false,
+    }
+  }
+
+  openRegWindow() {
+    this.setState({regWindowIsOpened: true});
+  }
+  closeRegWindow() {
+    this.setState({regWindowIsOpened: false});
+  }
+
+  openAuthWindow() {
+    this.setState({authWindowIsOpened: true});
+  }
+  closeAuthWindow() {
+    this.setState({authWindowIsOpened: false});
+  }
+
+  login() {
+    this.setState({logged: true});
+  }
+  logout() {
+    this.setState({logged: false});
+    localStorage.removeItem('login');
+  }
+
+  render() {
+    return (
+      <HomeAndAuthTemplate
+        nav={ <Nav
+                logout={this.logout}
+                onAddUser={this.props.onAddUser}
+                regWindowIsOpened={this.state.regWindowIsOpened}
+                authWindowIsOpened={this.state.authWindowIsOpened}
+                openAuthWindow={this.openAuthWindow}
+                openRegWindow={this.openRegWindow}
+              />
+            }
+        header={ <Header /> }
+      >
+
+      {this.state.authWindowIsOpened && 
+        <AuthForm 
+          onAddUser={this.props.onAddUser} 
+          login={this.login} 
+          closeRegWindow={this.closeRegWindow}/>}
+      {this.state.regWindowIsOpened && 
+        <RegForm 
+            onAddUser={this.props.onAddUser}
+            login={this.login} 
+            closeRegWindow={this.closeRegWindow}/>}
+      </HomeAndAuthTemplate>
+    )
+  }
 }
 
 const mapStateToProps = store => ({
@@ -34,19 +91,16 @@ const mapStateToProps = store => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    onAddUser: (last, first, day, sx, tele, mail) => {
+    onAddUser: (data) => {
       dispatch({ type: "ADD_USER", 
-        lastName: last, 
-        firstName: first, 
-        dayOfBirth: day,
-        sex: sx,
-        phone: tele ,
-        email: mail 
+        lastName: data.lastName, 
+        firstName: data.firstName, 
+        dayOfBirth: data.dayOfBirth,
+        sex: data.sex,
+        phone: data.phone ,
+        email: data.email 
       });
     },
-    onWrongField: () => {
-      dispatch({ type: "WRONG_FIELD" })
-    }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthPage);

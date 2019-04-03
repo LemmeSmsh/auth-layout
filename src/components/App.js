@@ -16,9 +16,8 @@ const App = () => {
   return (
     <Provider store={store}>
       <Switch>
-        <Route path="/" component={AuthPage} exact>
-          <Route path="profile" component={ProfilePage} />
-        </Route>
+        <Route path="/" component={AuthPage} exact/>
+        <Route path="/profile" component={ProfilePage} exact/>
       </Switch>
     </Provider>
   )
