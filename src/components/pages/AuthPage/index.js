@@ -23,7 +23,7 @@ class AuthPage extends React.Component {
   this.openRegWindow = this.openRegWindow.bind(this);
   this.closeRegWindow = this.closeRegWindow.bind(this);
   this.openAuthWindow = this.openAuthWindow.bind(this);
-  this.closeAuthWindow = this.openAuthWindow.bind(this);
+  this.closeAuthWindow = this.closeAuthWindow.bind(this);
   this.login = this.login.bind(this);
   this.logout = this.logout.bind(this);
 
@@ -75,7 +75,7 @@ class AuthPage extends React.Component {
         <AuthForm 
           onAddUser={this.props.onAddUser} 
           login={this.login} 
-          closeRegWindow={this.closeRegWindow}/>}
+          closeAuthWindow={this.closeAuthWindow}/>}
       {this.state.regWindowIsOpened && 
         <RegForm 
             onAddUser={this.props.onAddUser}

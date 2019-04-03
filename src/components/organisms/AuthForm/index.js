@@ -74,7 +74,7 @@ const Paragraph = styled.p`
 `
 
 
-const AuthForm = ({ onAddUser, closeRegWindow, login }) => {
+const AuthForm = ({ onAddUser, closeAuthWindow, login }) => {
   
   let name = "";
 
@@ -96,12 +96,12 @@ const AuthForm = ({ onAddUser, closeRegWindow, login }) => {
   return (
     <Wrapper>
       <InnerWrapper>
-      <CloseIcon icon="close" onClick={closeRegWindow}/>
+      <CloseIcon icon="close" onClick={closeAuthWindow} />
         <Input 
           name="firstName"
           onChange={changeInnerName}
           id="firstName"
-          label="Введите имя"
+          placeholder="Ваше имя"
         />
       <Button onClick={ auth }>Вход</Button>
       <HR/>
